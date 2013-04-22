@@ -1,8 +1,8 @@
 {
   "name": "xero",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
-    "oauth": "*",
+    "oauth": "0.9.10",
     "easyxml": "*",
     "xml2js": "*"
   },
@@ -23,5 +23,6 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+  "gitHead": "3ceec8036cd7bafb6949a709220aa6f4f367f710"
 }

@@ -3,16 +3,19 @@ var oauth   = require("oauth");
 var easyxml = require('Easyxml');
 var xml2js = require('xml2js');
 
-function Xero(key, secret, rsa_key) {
+var XERO_BASE_URL = 'https://api.xero.com';
+var XERO_API_URL = XERO_BASE_URL + '/api.xro/2.0';
+
+function Xero(key, secret, rsa_key, showXmlAttributes) {
     this.key = key;
     this.secret = secret;
 
-    this.parser = new xml2js.Parser({explicitArray: false, ignoreAttrs: showAttributes !== undefined ? (showAttributes ? false : true) : true, async: true});
+    this.parser = new xml2js.Parser({explicitArray: false, ignoreAttrs: showXmlAttributes !== undefined ? (showXmlAttributes ? false : true) : true, async: true});
     easyxml.configure({rootElement: 'Request', manifest: true});
 
-    this.request = new oauth.OAuth(null, null, key, secret, '1.0', null, "PLAINTEXT");
-    this.request._signatureMethod = "RSA-SHA1"
-    this.request._createSignature = function(signatureBase, tokenSecret) {
+    this.oa = new oauth.OAuth(null, null, key, secret, '1.0', null, "PLAINTEXT");
+    this.oa._signatureMethod = "RSA-SHA1"
+    this.oa._createSignature = function(signatureBase, tokenSecret) {
         var signer = crypto.createSign("RSA-SHA1")
         signer.update(signatureBase);
         return signer.sign(rsa_key, output_format = "base64");
@@ -26,7 +29,8 @@ Xero.prototype.call = function(method, path, body, callback) {
     if (body) {
         xml = easyxml.render(body);
     }
-    self.request._performSecureRequest(self.key, self.secret, method, path, null, xml, null, function(err, xml, res) {
+
+    self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, xml, null, function(err, xml, res) {
         if (err) {
             return callback(err);
         }
@@ -34,9 +38,9 @@ Xero.prototype.call = function(method, path, body, callback) {
         self.parser.parseString(xml, function(err, json) {
             if (err) return callback(err);
             if (json && json.Response && json.Response.Status !== 'OK') {
-                return callback(json);
+                return callback(json, res);
             } else {
-                return callback(null, json);
+                return callback(null, json, res);
             }
         });
 

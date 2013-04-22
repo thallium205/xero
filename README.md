@@ -1,46 +1,46 @@
-# freshbooks-node
- A simple node library for Freshbooks that does not require libxmljs
+# xero
+ A simple node library for Xero Private Applications
 
 ## Install
 <pre>
-  npm install freshbooks-node
+  npm install xero
 </pre>
 ## Usage
 ### Request
 ```javascript
-var Freshbooks = require('freshbooks-node');
-var freshbooks = new Freshbooks(APPLICATION_NAME, APPLICATION_TOKEN, USER_AGENT)
-freshbooks.call('invoice.create',
-    {
-        invoice:
-        {   client_id: 32,
-            status: 'draft',
-            lines: {
-                line:
-                {
-                    name: 'Tulips',
-                    description: 'A type of flower',
-                    unit_cost: 10,
-                    quantity: 2
-                }
-            }
-        }
-    }, function(err, json) {
+var Xero = require('xero');
+
+var xero = new Xero(CONSUMER_KEY, CONSUMER_SECRET, RSA_PRIVATE_KEY);
+xero.call('GET', '/Users', null, function(err, json) {
         if (err) {
-            console.error(err);
+            log.error(err);
+            return res.json(400, {error: 'Unable to contact Xero'});
         }
-        console.log(JSON.stringify(json, null, 4));
+        return res.json(200, json);
     });
 ```
 ### Response
 ```javascript
 {
-    "response": {
-        "invoice_id": "73869"
-    }
+   "Response":{
+      "Id":"37286998-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "Status":"OK",
+      "ProviderName":"My Account",
+      "DateTimeUTC":"2013-04-22T17:13:31.2755569Z",
+      "Users":{
+         "User":{
+            "UserID":"613fbf01-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "FirstName":"Chadd",
+            "LastName":"Sexington",
+            "UpdatedDateUTC":"2013-04-12T05:54:50.477",
+            "IsSubscriber":"true",
+            "OrganisationRole":"STANDARD"
+         }
+      }
+   }
 }
 ```
 ## Docs
-http://developers.freshbooks.com/
+http://developer.xero.com/api/
 
 Enjoy! - thallium205 <https://github.com/thallium205>
