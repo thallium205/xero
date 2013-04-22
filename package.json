@@ -1,0 +1,27 @@
+{
+  "name": "xero",
+  "version": "0.0.1",
+  "dependencies": {
+    "oauth": "*",
+    "easyxml": "*",
+    "xml2js": "*"
+  },
+  "description": "Xero.com Node Library",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:thallium205/xero.git"
+  },
+  "keywords": [
+    "xero",
+    "node",
+    "nodejs"
+  ],
+  "author": "thallium205 <https://github.com/thallium205>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
