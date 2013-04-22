@@ -16,9 +16,7 @@ function Xero(key, secret, rsa_key, showXmlAttributes) {
     this.oa = new oauth.OAuth(null, null, key, secret, '1.0', null, "PLAINTEXT");
     this.oa._signatureMethod = "RSA-SHA1"
     this.oa._createSignature = function(signatureBase, tokenSecret) {
-        var signer = crypto.createSign("RSA-SHA1")
-        signer.update(signatureBase);
-        return signer.sign(rsa_key, output_format = "base64");
+        return crypto.createSign("RSA-SHA1").update(signatureBase).sign(rsa_key, output_format = "base64");
     }
 }
 
@@ -26,11 +24,11 @@ Xero.prototype.call = function(method, path, body, callback) {
     var self = this;
 
     var xml = null;
-    if (body) {
+    if (method && method !== 'GET' && body) {
         xml = easyxml.render(body);
     }
 
-    self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, xml, null, function(err, xml, res) {
+    self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, xml, 'application/xml', function(err, xml, res) {
         if (err) {
             return callback(err);
         }
@@ -43,7 +41,6 @@ Xero.prototype.call = function(method, path, body, callback) {
                 return callback(null, json, res);
             }
         });
-
     });
 }
 
