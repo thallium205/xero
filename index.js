@@ -1,6 +1,6 @@
 var crypto  = require("crypto");
 var oauth   = require("oauth");
-var easyxml = require('Easyxml');
+var easyxml = require('easyxml');
 var xml2js = require('xml2js');
 
 var XERO_BASE_URL = 'https://api.xero.com';
