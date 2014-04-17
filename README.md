@@ -40,6 +40,24 @@ xero.call('GET', '/Users', null, function(err, json) {
    }
 }
 ```
+
+### Download PDF
+```javascript
+var Xero = require('xero');
+var fs = require('fs');
+
+var xero = new Xero(CONSUMER_KEY, CONSUMER_SECRET, RSA_PRIVATE_KEY);
+var invoiceId = 'invoice-identifier';
+var req = xero.call('GET', '/Invoices/' + invoiceId);
+
+req.setHeader('Accept', 'application/pdf');
+req.on('response', function(response) {
+  var file = fs.createWriteStream(invoiceId + '.pdf');
+  response.pipe(file);
+});
+req.end();
+```
+
 ## Docs
 http://developer.xero.com/api/
 

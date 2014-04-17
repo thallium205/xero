@@ -27,8 +27,7 @@ Xero.prototype.call = function(method, path, body, callback) {
     if (method && method !== 'GET' && body) {
         xml = easyxml.render(body);
     }
-
-    self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, xml, 'application/xml', function(err, xml, res) {
+    var process = function(err, xml, res) {
         if (err) {
             return callback(err);
         }
@@ -41,7 +40,8 @@ Xero.prototype.call = function(method, path, body, callback) {
                 return callback(null, json, res);
             }
         });
-    });
+    };
+    return self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, xml, 'application/xml', callback ? process : null);
 }
 
 module.exports = Xero;
