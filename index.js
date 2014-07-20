@@ -23,9 +23,15 @@ function Xero(key, secret, rsa_key, showXmlAttributes) {
 Xero.prototype.call = function(method, path, body, callback) {
     var self = this;
 
-    var xml = null;
+    var post_body = null;
+    var content_type = null;
     if (method && method !== 'GET' && body) {
-        xml = easyxml.render(body);
+        if (Buffer.isBuffer(body)) {
+            post_body = body;
+        } else {
+            post_body = easyxml.render(body);            
+            content_type = 'application/xml';
+        }
     }
     var process = function(err, xml, res) {
         if (err) {
@@ -41,7 +47,7 @@ Xero.prototype.call = function(method, path, body, callback) {
             }
         });
     };
-    return self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, xml, 'application/xml', callback ? process : null);
+    return self.oa._performSecureRequest(self.key, self.secret, method, XERO_API_URL + path, null, post_body, content_type, callback ? process : null);
 }
 
 module.exports = Xero;
