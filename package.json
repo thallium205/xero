@@ -1,8 +1,8 @@
 {
   "name": "xero",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
-    "oauth": "0.9.10",
+    "oauth": "0.9.12",
     "easyxml": "*",
     "xml2js": "*"
   },
