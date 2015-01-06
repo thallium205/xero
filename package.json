@@ -3,8 +3,8 @@
   "version": "0.0.5",
   "dependencies": {
     "oauth": "0.9.12",
-    "easyxml": "*",
-    "xml2js": "*"
+    "easyxml": "0.0.5",
+    "xml2js": "0.4.4"
   },
   "description": "Xero.com Node Library",
   "main": "index.js",
