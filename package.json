@@ -1,6 +1,6 @@
 {
   "name": "xero",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "dependencies": {
     "oauth": "0.9.12",
     "easyxml": "0.0.5",
