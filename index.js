@@ -11,7 +11,7 @@ function Xero(key, secret, rsa_key, showXmlAttributes, customHeaders) {
     this.secret = secret;
 
     this.parser = new xml2js.Parser({explicitArray: false, ignoreAttrs: showXmlAttributes !== undefined ? (showXmlAttributes ? false : true) : true, async: true});
-    easyxml.configure({rootElement: 'Request', manifest: true});
+    this.easyxml = easyxml({rootElement: 'Request', manifest: true});
 
     this.oa = new oauth.OAuth(null, null, key, secret, '1.0', null, "PLAINTEXT", null, customHeaders);
     this.oa._signatureMethod = "RSA-SHA1"
@@ -29,7 +29,7 @@ Xero.prototype.call = function(method, path, body, callback) {
         if (Buffer.isBuffer(body)) {
             post_body = body;
         } else {
-            post_body = easyxml.render(body);            
+            post_body = this.easyxml.render(body);            
             content_type = 'application/xml';
         }
     }
