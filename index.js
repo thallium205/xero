@@ -1,7 +1,8 @@
 var crypto  = require("crypto");
 var oauth   = require("oauth");
-var easyxml = require('easyxml');
+var EasyXml = require('easyxml');
 var xml2js = require('xml2js');
+var inflect = require('inflect');
 
 var XERO_BASE_URL = 'https://api.xero.com';
 var XERO_API_URL = XERO_BASE_URL + '/api.xro/2.0';
@@ -11,7 +12,6 @@ function Xero(key, secret, rsa_key, showXmlAttributes, customHeaders) {
     this.secret = secret;
 
     this.parser = new xml2js.Parser({explicitArray: false, ignoreAttrs: showXmlAttributes !== undefined ? (showXmlAttributes ? false : true) : true, async: true});
-    easyxml.configure({rootElement: 'Request', manifest: true});
 
     this.oa = new oauth.OAuth(null, null, key, secret, '1.0', null, "PLAINTEXT", null, customHeaders);
     this.oa._signatureMethod = "RSA-SHA1"
@@ -29,7 +29,8 @@ Xero.prototype.call = function(method, path, body, callback) {
         if (Buffer.isBuffer(body)) {
             post_body = body;
         } else {
-            post_body = easyxml.render(body);            
+            var root = path.match(/([^\/\?]+)/)[1];
+            post_body = new EasyXml({rootElement: inflect.singularize(root), rootArray: root, manifest: true}).render(body);
             content_type = 'application/xml';
         }
     }
