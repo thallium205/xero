@@ -3,8 +3,9 @@
   "version": "0.0.6",
   "dependencies": {
     "oauth": "0.9.12",
-    "easyxml": "0.0.5",
-    "xml2js": "0.4.4"
+    "easyxml": "1.0.0",
+    "xml2js": "0.4.4",
+    "inflect": "0.3.0"
   },
   "description": "Xero.com Node Library",
   "main": "index.js",

@@ -40,6 +40,25 @@ xero.call('GET', '/Users', null, function(err, json) {
    }
 }
 ```
+### Example POST Request
+```javascript
+...
+// Adding contact(s)
+var request;
+// Single
+request = {
+    Name: 'Name1'
+};
+// Multiple
+request = [{
+    Name: 'Name1'
+}, {
+    Name: 'Name2'
+}];
+xero.call('POST', '/Contacts?SummarizeErrors=false', request, function(err, json) {
+        ...
+    });
+```
 
 ### Download PDF
 ```javascript
