@@ -8,16 +8,34 @@
 ## Usage
 ### Request
 ```javascript
+var express = require("express");
 var Xero = require('xero');
+var fs = require('fs');
 
+var app = express();
+
+var CONSUMER_KEY="my consumer key";
+var CONSUMER_SECRET="my consumer secret";
+var RSA_PRIVATE_KEY = fs.readFileSync(process.env.HOME + "/.ssh/id_rsa");
 var xero = new Xero(CONSUMER_KEY, CONSUMER_SECRET, RSA_PRIVATE_KEY);
-xero.call('GET', '/Users', null, function(err, json) {
-        if (err) {
-            log.error(err);
-            return res.json(400, {error: 'Unable to contact Xero'});
-        }
-        return res.json(200, json);
-    });
+
+app.get('/', function (req, res) {
+  xero.call('GET', '/Users', null, function(err, json) {
+    if (err) {
+      res.status(err.statusCode);
+      res.write(JSON.stringify(err));
+      res.end();
+    } else {
+      res.status(200);
+      res.write(JSON.stringify(json));
+      res.end();
+    }
+  });
+});
+
+app.listen(3000, function () {
+  console.log("Listening...");
+});
 ```
 ### Response
 ```javascript
