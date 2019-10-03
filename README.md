@@ -96,6 +96,6 @@ req.end();
 ```
 
 ## Docs
-http://developer.xero.com/api/
+http://developer.xero.com/documentation/
 
 Enjoy! - thallium205 <https://github.com/thallium205>
