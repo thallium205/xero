@@ -2,10 +2,12 @@
   "name": "xero",
   "version": "0.0.8",
   "dependencies": {
-    "oauth": "0.9.12",
     "easyxml": "1.0.0",
-    "xml2js": "0.4.4",
-    "inflect": "0.3.0"
+    "inflect": "0.3.0",
+    "lodash": "^3.9.2",
+    "oauth": "0.9.12",
+    "string": "^3.1.1",
+    "xml2js": "0.4.4"
   },
   "description": "Xero.com Node Library",
   "main": "index.js",
@@ -21,9 +23,13 @@
   "author": "thallium205 <https://github.com/thallium205>",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/methods-test.js",
+    "test-xero-api": "mocha test/xero-api.js"
   },
   "gitHead": "3ceec8036cd7bafb6949a709220aa6f4f367f710"
 }

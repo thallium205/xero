@@ -95,6 +95,54 @@ req.on('response', function(response) {
 req.end();
 ```
 
+### Extra methods and helpers
+```javascript
+var xero = new Xero(CONSUMER_KEY, CONSUMER_SECRET, RSA_PRIVATE_KEY);
+
+// for use in constructing filters
+xero.helpers.dateToXeroDateTimeString(new Date(0)) // => DateTime(1970-1-1)
+```
+
+Each of the resources listed below has a #find and #findOne method accessible via it's named property (e.g. `xero.Invoices`, `xero.BankTransactions` etc) on the Xero instance. E.g.:
+```javascript
+xero.Invoices.find(function(err, data) {
+  // data.Response.Invoices.Invoice => array of invoices
+});
+xero.Invoices.findOne('foobarId', function(err, data) {
+  // data.Response.Invoices.Invoice === foobarId invoice
+});
+```
+The find method also optionally accepts a filter string
+```javascript
+xero.Invoices.find('AmountDue > 1000000000', function(err, data) {
+  // data.Status === OK
+  // data.Response.Invoices === undefined
+});
+```
+- Accounts
+- BankTransactions
+- BankTransfers
+- BrandingThemes
+- Contacts
+- ContactGroups
+- CreditNotes
+- Currencies
+- Employees
+- ExpenseClaims
+- Invoices
+- Items
+- Journals
+- ManualJournals
+- Organisation
+- OverPayments
+- Payments
+- Prepayments
+- Receipts
+- RepeatingInvoices
+- TaxRates
+- TrackingCategories
+- Users
+
 ## Docs
 http://developer.xero.com/documentation/
 
