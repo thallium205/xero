@@ -20,11 +20,15 @@ function Xero(key, secret, rsa_key, showXmlAttributes, customHeaders) {
     }
 }
 
-Xero.prototype.call = function(method, path, body, callback) {
+Xero.prototype.call = function(method, path, body, content_type, callback) {
     var self = this;
-
     var post_body = null;
-    var content_type = null;
+
+    if (typeof content_type === 'function') {
+        callback = content_type;
+        content_type = null;
+    }
+
     if (method && method !== 'GET' && body) {
         if (Buffer.isBuffer(body)) {
             post_body = body;
