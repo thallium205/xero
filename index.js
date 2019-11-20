@@ -20,7 +20,7 @@ function Xero(key, secret, rsa_key, showXmlAttributes, customHeaders) {
     }
 }
 
-Xero.prototype.call = function(method, path, body, callback) {
+Xero.prototype.call = function(method, path, body, contentType, callback) {
     var self = this;
 
     var post_body = null;
@@ -28,6 +28,9 @@ Xero.prototype.call = function(method, path, body, callback) {
     if (method && method !== 'GET' && body) {
         if (Buffer.isBuffer(body)) {
             post_body = body;
+			if( contentType !== null) {
+				content_type = contentType;				
+			}
         } else {
             var root = path.match(/([^\/\?]+)/)[1];
             post_body = new EasyXml({rootElement: inflect.singularize(root), rootArray: root, manifest: true}).render(body);
