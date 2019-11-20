@@ -28,6 +28,7 @@ Xero.prototype.call = function(method, path, body, callback) {
     if (method && method !== 'GET' && body) {
         if (Buffer.isBuffer(body)) {
             post_body = body;
+            content_type = body.content_type;
         } else {
             var root = path.match(/([^\/\?]+)/)[1];
             post_body = new EasyXml({rootElement: inflect.singularize(root), rootArray: root, manifest: true}).render(body);
