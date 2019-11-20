@@ -94,6 +94,53 @@ req.on('response', function(response) {
 });
 req.end();
 ```
+## Constructor Parameters
+
+| Parameter         | Purpose |
+|:----------------- |:------- |
+| key               | XERO OAuth Credentials Consumer Key  |
+| secret            | XERO OAuth Credentials Consumer Secret |
+| rsa_key           | X509 Private Key Certificate id_rsa or pem file |
+| showXmlAttributes | shows the attributes on the xml elements |
+| customHeaders     | Custom http headers |
+| easyXmlConfig     | Overrides for JSON to XML parser [node-easyxml](https://github.com/tlhunter/node-easyxml) |
+ 
+### easyXmlConfig
+
+With this parameter you can override the behavior of easyXml. For example, if you needed to control the way Arrays are un-wrapped. Line Items in Invoices can have up to two TrackingCategory attached like this.
+
+```xml
+<Tracking>
+    <TrackingCategory>
+        <Name>Melbourne</Name>
+        <Option>e44c3446-b741-4717-9710-057c1fc14603</Option>
+        <TrackingCategoryID>bf8a9440-37bd-44fd-ab97-f207a2588ac1</TrackingCategoryID>
+    </TrackingCategory>
+    <TrackingCategory>
+        <Name>Virtual Reality Design</Name>
+        <Option>c712bb31-2d5e-470f-90da-70f2cc6fe595</Option>
+        <TrackingCategoryID>2d002487-1540-442d-bb8a-b2d7d3ff11c7</TrackingCategoryID>
+    </TrackingCategory>
+</Tracking>
+```
+However, to get easyXml to do this you would need to pass ```{unwrappedArrays: true}``` as the easyXmlConfig parameter. Then you can then pass the following javascript to build the above xml.
+
+```javascript
+"Tracking": {
+    "TrackingCategory": [
+        {
+            Name: {"_": "Melbourne"},
+            Option: {"_": "e44c3446-b741-4717-9710-057c1fc14603"},
+            TrackingCategoryID: {"_": "bf8a9440-37bd-44fd-ab97-f207a2588ac1"}
+        },
+        {
+            Name: {"_": "Virtual Reality Design"},
+            Option: {"_": "c712bb31-2d5e-470f-90da-70f2cc6fe595"},
+            TrackingCategoryID: {"_": "2d002487-1540-442d-bb8a-b2d7d3ff11c7"}
+        }
+    ]
+}
+```
 
 ## Docs
 http://developer.xero.com/documentation/

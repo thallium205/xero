@@ -2,10 +2,11 @@
   "name": "xero",
   "version": "0.0.8",
   "dependencies": {
-    "oauth": "0.9.12",
     "easyxml": "1.0.0",
-    "xml2js": "0.4.4",
-    "inflect": "0.3.0"
+    "inflect": "0.3.0",
+    "oauth": "0.9.12",
+    "object-assign": "^4.1.1",
+    "xml2js": "0.4.4"
   },
   "description": "Xero.com Node Library",
   "main": "index.js",
@@ -19,6 +20,9 @@
     "nodejs"
   ],
   "author": "thallium205 <https://github.com/thallium205>",
+  "contributors": [
+    { "name" : "Philip A Senger", "url" : "https://github.com/psenger" }
+  ],
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {},
